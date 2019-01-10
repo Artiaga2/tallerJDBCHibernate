@@ -23,7 +23,7 @@ public class JDBCApplication {
 		Connection connection = null;
 		Statement statement = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/petclinic","root", "root");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/petclinic","root", "Everis2017");
 			if (connection != null)
 				System.out.println("Conexión establecida");
 			
