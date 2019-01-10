@@ -1,19 +1,19 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.sql.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.NamedEntity;
@@ -22,7 +22,8 @@ import org.springframework.samples.petclinic.visit.Visit;
 @Entity
 @Table(name = "facturas")
 public class Bill extends NamedEntity {
-	
+	@Min (10000000)
+	@Max (99999999)
     @Digits(fraction = 0, integer = 10)
     private Long facturaId;
     
@@ -36,15 +37,14 @@ public class Bill extends NamedEntity {
     @ManyToOne
     @JoinColumn(name = "owner")
     private Owner owner;
-    
-    public Long getFactura() {
-		return factura;
+
+	public Long getFacturaId() {
+		return facturaId;
 	}
 
-	public void setFactura(Long factura) {
-		this.factura = factura;
+	public void setFacturaId(Long facturaId) {
+		this.facturaId = facturaId;
 	}
-	
 
 	public Date getFechaPago() {
 		return fechaPago;
@@ -62,10 +62,12 @@ public class Bill extends NamedEntity {
 		this.cuantia = cuantia;
 	}
 
+	@OneToOne(cascade = CascadeType.ALL, mappedBy="bill", fetch = FetchType.LAZY)
+    private Visit visit;
 
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="facturaId", fetch = FetchType.EAGER)
-    private Set<Visit> visits = new LinkedHashSet<>();
+	public Bill() {
+	}
     
+	
 	
 }

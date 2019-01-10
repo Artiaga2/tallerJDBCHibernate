@@ -61,10 +61,22 @@ public class Owner extends Person {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-//    private Set<Bill> bills;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private Set<Bill> bills;
 
-    public String getAddress() {
+    public void setPets(Set<Pet> pets) {
+		this.pets = pets;
+	}
+
+	public Set<Bill> getBills() {
+		return bills;
+	}
+
+	public void setBills(Set<Bill> bills) {
+		this.bills = bills;
+	}
+
+	public String getAddress() {
         return this.address;
     }
 
